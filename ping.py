@@ -207,7 +207,7 @@ class Ping(object):
         Send one ICMP ECHO_REQUEST and receive the response until self.timeout
 
         Returns a dictionary containing response information if a
-        response is recieved, or Null otherwise.
+        response is recieved, or None otherwise.
         """
         try: # One could use UDP here, but it's obscure
             current_socket = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.getprotobyname("icmp"))
@@ -223,7 +223,7 @@ class Ping(object):
 
         send_time = self.send_one_ping(current_socket)
         if send_time == None:
-            return
+            return None
         self.send_count += 1
 
         receive_time, packet_size, ip, ip_header, icmp_header = self.receive_one_ping(current_socket)
@@ -246,7 +246,7 @@ class Ping(object):
                         }
             return response
         else:
-            return Null
+            return None
 
     def send_one_ping(self, current_socket):
         """
