@@ -101,8 +101,6 @@ class Ping(object):
             self.dest_ip = to_ip(self.destination)
         except socket.gaierror as e:
             self.print_unknown_host(e)
-        else:
-            self.print_start()
 
         self.seq_number = 0
         self.send_count = 0
