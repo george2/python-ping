@@ -205,6 +205,9 @@ class Ping(object):
     def do(self):
         """
         Send one ICMP ECHO_REQUEST and receive the response until self.timeout
+
+        Returns a dictionary containing response information if a
+        response is recieved, or Null otherwise.
         """
         try: # One could use UDP here, but it's obscure
             current_socket = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.getprotobyname("icmp"))
@@ -235,10 +238,15 @@ class Ping(object):
             if self.max_time < delay:
                 self.max_time = delay
 
-            self.print_success(delay, ip, packet_size, ip_header, icmp_header)
-            return delay
+            response = {'delay': delay,
+                       'ip': ip,
+                       'packet_size': packet_size,
+                       'ip_header', ip_header,
+                       'icmp_header', icmp_header,
+                        }
+            return response
         else:
-            self.print_failed()
+            return Null
 
     def send_one_ping(self, current_socket):
         """
